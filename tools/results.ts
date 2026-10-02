@@ -17,7 +17,7 @@ interface Rewrite {
 }
 
 export function assertsAsResults(source: string): string {
-  const lines = source.split("\n");
+  const lines = collapseAsserts(source.split("\n"));
   const rewrites = new Map<number, Rewrite>();
   for (const [index, line] of lines.entries()) {
     const rewrite = parseAssertLine(line);
@@ -61,6 +61,51 @@ function parseAssertLine(line: string): Rewrite | null {
   return null;
 }
 
+/**
+ * Join asserts that Prettier wrapped over several lines back into one
+ * line, but only when the rewritten result line fits.
+ */
+function collapseAsserts(lines: string[]): string[] {
+  const output: string[] = [];
+  for (let index = 0; index < lines.length; index++) {
+    const line = lines[index] as string;
+    const opener = /^(\s*)assert\.\w+\($/.exec(line);
+    const end = lines.findIndex(
+      (candidate, at) =>
+        at > index && candidate === `${opener?.[1] ?? ""});`,
+    );
+    if (!opener || end === -1) {
+      output.push(line);
+      continue;
+    }
+    const joined = joinLines(lines.slice(index, end + 1));
+    const rewrite = parseAssertLine(joined);
+    const width = rewrite
+      ? `${rewrite.indent}${rewrite.expression}; // ${rewrite.result}`
+          .length
+      : Infinity;
+    if (width <= MAX_LINE_LENGTH) {
+      output.push(joined);
+      index = end;
+    } else {
+      output.push(line);
+    }
+  }
+  return output;
+}
+
+/** Join Prettier-wrapped lines the way Prettier prints them flat. */
+export function joinLines(lines: string[]): string {
+  let joined = lines[0] as string;
+  for (const raw of lines.slice(1)) {
+    const next = raw.trim();
+    if (/^[)\]}]/.test(next)) joined = joined.replace(/,$/, "");
+    const tight = /[([]$/.test(joined) || /^[)\]]/.test(next);
+    joined += tight ? next : ` ${next}`;
+  }
+  return joined;
+}
+
 /** Split on top-level commas; null if the brackets do not balance. */
 export function splitArguments(text: string): string[] | null {
   const args: string[] = [];
@@ -77,7 +122,8 @@ export function splitArguments(text: string): string[] | null {
     if (depth < 0) return null;
   }
   if (depth !== 0) return null;
-  args.push(text.slice(start).trim());
+  const last = text.slice(start).trim();
+  if (last) args.push(last);
   return args;
 }
 

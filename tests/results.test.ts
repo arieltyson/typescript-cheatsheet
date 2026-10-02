@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { assertsAsResults, splitArguments } from "../tools/results.ts";
+import {
+  assertsAsResults,
+  joinLines,
+  splitArguments,
+} from "../tools/results.ts";
 
 test("equal becomes a result comment", () => {
   assert.equal(
@@ -34,14 +38,10 @@ test("keeps indentation and other lines", () => {
   );
 });
 
-test("leaves messages, throws and multi-line asserts", () => {
+test("leaves asserts with messages, and throws", () => {
   const source = [
     'assert.equal(x, 1, "why");',
     "assert.throws(() => run());",
-    "assert.equal(",
-    "  x,",
-    "  1,",
-    ");",
   ].join("\n");
   assert.equal(assertsAsResults(source), source);
 });
@@ -51,4 +51,40 @@ test("splits only top-level commas", () => {
     splitArguments('f(a, b), [1, 2], "x, y", `${a, b}`'),
     ["f(a, b)", "[1, 2]", '"x, y"', "`${a, b}`"],
   );
+});
+
+test("rejoins asserts that Prettier wrapped", () => {
+  const source = [
+    "assert.deepEqual(",
+    "  values.toSorted((a, b) => a - b),",
+    "  [1, 9, 10],",
+    ");",
+  ].join("\n");
+  assert.equal(
+    assertsAsResults(source),
+    "values.toSorted((a, b) => a - b); // [1, 9, 10]",
+  );
+});
+
+test("joins nested wrapped literals the way Prettier prints them", () => {
+  assert.equal(
+    joinLines([
+      "f(",
+      "  { a: 1 },",
+      "  [",
+      "    1,",
+      "    2,",
+      "  ],",
+      ");",
+    ]),
+    "f({ a: 1 }, [1, 2]);",
+  );
+});
+
+test("keeps a wrapped assert whose result would not fit", () => {
+  const long = "x".repeat(70);
+  const source = ["assert.equal(", `  ${long},`, "  12345,", ");"].join(
+    "\n",
+  );
+  assert.equal(assertsAsResults(source), source);
 });
