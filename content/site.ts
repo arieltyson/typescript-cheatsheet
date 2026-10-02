@@ -1508,6 +1508,31 @@ export const site: Part[] = [
           },
         ],
       },
+      {
+        id: "dijkstra",
+        title: "Dijkstra's shortest path",
+        entries: [
+          {
+            id: "dijkstra-template",
+            title: "Dijkstra with a heap",
+            aliases: [
+              "shortest path",
+              "weighted graph",
+              "priority queue",
+              "network delay",
+              "cheapest route",
+              "single source shortest path",
+            ],
+            code: ["algorithms/dijkstra.ts:dijkstra"],
+            time: "O((V + E) log V)",
+            space: "O(V + E)",
+            useWhen:
+              "Shortest path from one source when edges have different non-negative weights. Uses `PriorityQueue` from the Heap section; equal weights only need BFS.",
+            gotcha:
+              "Negative weights break Dijkstra. To rebuild the path, record `previous[neighbor] = node` whenever a distance improves.",
+          },
+        ],
+      },
     ],
   },
 ];
