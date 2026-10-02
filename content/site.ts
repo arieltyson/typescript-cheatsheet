@@ -568,4 +568,190 @@ export const site: Part[] = [
       },
     ],
   },
+  {
+    id: "structures",
+    title: "Data structures",
+    sections: [
+      {
+        id: "complexity",
+        title: "Operation costs",
+        intro:
+          "Average case in V8 (Node and Chrome). Worst case is shown where it differs and matters.",
+        entries: [
+          {
+            id: "constraints",
+            title: "Input size to target complexity",
+            aliases: [
+              "constraints",
+              "time limit",
+              "how fast",
+              "big o target",
+            ],
+            table: {
+              header: ["Input size n", "Target", "Typical approach"],
+              rows: [
+                ["n <= 10", "O(n!)", "Permutations, backtracking"],
+                ["n <= 20", "O(2^n)", "Subsets, bitmask DP"],
+                ["n <= 500", "O(n^3)", "Triple loop, interval DP"],
+                ["n <= 5,000", "O(n^2)", "All pairs, 2D DP"],
+                [
+                  "n <= 10^6",
+                  "O(n log n)",
+                  "Sort, heap, binary search",
+                ],
+                ["n <= 10^8", "O(n)", "One pass, two pointers, Map"],
+                ["Larger", "O(log n) or O(1)", "Binary search, math"],
+              ],
+            },
+          },
+          {
+            id: "array-costs",
+            title: "Array costs",
+            aliases: ["array complexity", "array big o", "shift cost"],
+            table: {
+              header: ["Operation", "Code", "Time"],
+              rows: [
+                ["Index, assign", "`items[i]`, `items.at(-1)`", "O(1)"],
+                [
+                  "Add or remove at the end",
+                  "`push`, `pop`",
+                  "O(1) amortized",
+                ],
+                [
+                  "Add or remove at the front",
+                  "`shift`, `unshift`",
+                  "O(n)",
+                ],
+                [
+                  "Insert or delete in the middle",
+                  "`splice(i, 1)`",
+                  "O(n)",
+                ],
+                ["Search", "`includes`, `indexOf`, `find`", "O(n)"],
+                [
+                  "Copy or slice",
+                  "`slice(a, b)`, `[...items]`",
+                  "O(b - a)",
+                ],
+                ["Sort", "`sort`, `toSorted`", "O(n log n)"],
+                ["Length", "`items.length`", "O(1)"],
+              ],
+            },
+          },
+          {
+            id: "map-costs",
+            title: "Map & object costs",
+            aliases: [
+              "hash map complexity",
+              "map big o",
+              "object complexity",
+            ],
+            table: {
+              header: ["Operation", "Code", "Time"],
+              rows: [
+                [
+                  "Get, set, has, delete",
+                  "`map.get(k)`, `map.set(k, v)`",
+                  "O(1), worst O(n)",
+                ],
+                [
+                  "Object property",
+                  "`record[key]`, `key in record`",
+                  "O(1), worst O(n)",
+                ],
+                ["Size", "`map.size`", "O(1)"],
+                [
+                  "Size of an object",
+                  "`Object.keys(record).length`",
+                  "O(n)",
+                ],
+                ["Iterate", "`for (const [k, v] of map)`", "O(n)"],
+              ],
+            },
+          },
+          {
+            id: "set-costs",
+            title: "Set costs",
+            aliases: ["set complexity", "set big o"],
+            table: {
+              header: ["Operation", "Code", "Time"],
+              rows: [
+                [
+                  "Add, has, delete",
+                  "`set.add(x)`, `set.has(x)`",
+                  "O(1), worst O(n)",
+                ],
+                [
+                  "Union",
+                  "`new Set([...a, ...b])`",
+                  "O(len(a) + len(b))",
+                ],
+                [
+                  "Intersection",
+                  "`[...a].filter((x) => b.has(x))`",
+                  "O(len(a))",
+                ],
+                ["Build from an array", "`new Set(items)`", "O(n)"],
+              ],
+            },
+          },
+          {
+            id: "heap-costs",
+            title: "Heap costs (PriorityQueue below)",
+            aliases: ["priority queue complexity", "heap big o"],
+            table: {
+              header: ["Operation", "Code", "Time"],
+              rows: [
+                [
+                  "Push, pop",
+                  "`queue.push(x)`, `queue.pop()`",
+                  "O(log n)",
+                ],
+                ["Peek at the first item", "`queue.peek()`", "O(1)"],
+                [
+                  "Build from an array",
+                  "`new PriorityQueue(compare, items)`",
+                  "O(n)",
+                ],
+                [
+                  "Find or remove any item",
+                  "Not supported",
+                  "Scan is O(n)",
+                ],
+              ],
+            },
+          },
+          {
+            id: "string-costs",
+            title: "string costs",
+            aliases: [
+              "string complexity",
+              "string big o",
+              "concatenation cost",
+            ],
+            table: {
+              header: ["Operation", "Code", "Time"],
+              rows: [
+                ["Index", "`text[i]`, `text.charCodeAt(i)`", "O(1)"],
+                ["Slice", "`text.slice(a, b)`", "O(b - a)"],
+                ["Join", '`parts.join("")`', "O(total length)"],
+                ["Split", '`text.split(",")`', "O(n)"],
+                [
+                  "Substring search",
+                  "`text.includes(part)`, `indexOf`",
+                  "O(n * m) worst case",
+                ],
+                [
+                  "Compare",
+                  "`first === second`, `localeCompare`",
+                  "O(n)",
+                ],
+                ["Reverse", '`[...text].reverse().join("")`', "O(n)"],
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
 ];
