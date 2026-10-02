@@ -1131,4 +1131,71 @@ export const site: Part[] = [
       },
     ],
   },
+  {
+    id: "algorithms",
+    title: "Algorithms",
+    sections: [
+      {
+        id: "binary-search",
+        title: "Binary search",
+        intro:
+          "The loop condition and the update must agree: `low <= high` with `middle ± 1`, or `low < high` with `high = middle`.",
+        entries: [
+          {
+            id: "binary-search-exact",
+            title: "Find an exact value",
+            aliases: [
+              "binary search",
+              "search sorted array",
+              "log n search",
+            ],
+            code: ["algorithms/binary_search.ts:binarySearch"],
+            time: "O(log n)",
+            space: "O(1)",
+            gotcha:
+              "`(low + high) >> 1` floors for indexes below 2^31. For huge numeric ranges use `Math.floor((low + high) / 2)`.",
+          },
+          {
+            id: "lower-upper-bound",
+            title: "Lower & upper bound",
+            aliases: [
+              "bisect left",
+              "bisect right",
+              "first occurrence",
+              "last occurrence",
+              "insert position",
+              "count in range",
+            ],
+            code: [
+              "algorithms/binary_search.ts:lowerBound",
+              "algorithms/binary_search.ts:upperBound",
+            ],
+            time: "O(log n)",
+            space: "O(1)",
+            useWhen:
+              "First or last position of a value, where to insert it, or how many values fall in a range: `upperBound(v, b) - lowerBound(v, a)`.",
+          },
+          {
+            id: "binary-search-answer",
+            title: "Search on the answer",
+            aliases: [
+              "minimize maximum",
+              "smallest feasible",
+              "koko eating bananas",
+              "capacity to ship",
+              "predicate binary search",
+            ],
+            code: [
+              "algorithms/binary_search.ts:firstTrue",
+              "algorithms/binary_search.ts:minEatingSpeed",
+            ],
+            time: "O(n log m), m = size of the answer range",
+            space: "O(1)",
+            useWhen:
+              '"Find the smallest x such that ..." and if x works, every larger x works too.',
+          },
+        ],
+      },
+    ],
+  },
 ];
