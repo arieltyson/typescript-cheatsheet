@@ -32,7 +32,9 @@ export function exportedNames(source: string): string[] {
     const keyword = tokens[index + 1];
     if (token.text !== "export" || !keyword) continue;
     if (!DECLARATIONS.has(keyword.text)) continue;
-    const name = tokens[index + 2];
+    const afterKeyword = tokens[index + 2];
+    const name =
+      afterKeyword?.text === "*" ? tokens[index + 3] : afterKeyword;
     if (name) names.push(name.text);
   }
   return names;

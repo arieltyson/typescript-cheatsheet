@@ -1028,6 +1028,107 @@ export const site: Part[] = [
           },
         ],
       },
+      {
+        id: "trie",
+        title: "Trie",
+        entries: [
+          {
+            id: "trie-template",
+            title: "Trie (prefix tree)",
+            aliases: [
+              "prefix tree",
+              "autocomplete",
+              "word search",
+              "startsWith",
+              "dictionary of words",
+            ],
+            code: [
+              "structures/trie.ts:TrieNode",
+              "structures/trie.ts:Trie",
+              "structures/trie.ts:demoTrie",
+            ],
+            time: "O(m) per operation, m = word length",
+            space: "O(total characters inserted)",
+            useWhen: "Many prefix lookups over a set of words.",
+          },
+        ],
+      },
+      {
+        id: "union-find",
+        title: "Union-find",
+        entries: [
+          {
+            id: "union-find-template",
+            title: "Union-find (disjoint set)",
+            aliases: [
+              "disjoint set",
+              "dsu",
+              "connected components",
+              "redundant connection",
+              "cycle in undirected graph",
+              "kruskal",
+            ],
+            code: [
+              "structures/union_find.ts:UnionFind",
+              "structures/union_find.ts:demoUnionFind",
+            ],
+            time: "O(α(n)) amortized per operation, effectively O(1)",
+            space: "O(n)",
+            useWhen:
+              "Merging groups and asking whether two items are connected, especially as edges arrive one at a time.",
+          },
+        ],
+      },
+      {
+        id: "graphs",
+        title: "Graphs",
+        entries: [
+          {
+            id: "adjacency-list",
+            title: "Adjacency lists from edges",
+            aliases: [
+              "graph representation",
+              "edge list",
+              "neighbors",
+              "build graph",
+              "undirected",
+              "directed",
+              "weighted graph",
+            ],
+            code: [
+              "structures/graphs.ts:buildGraph",
+              "structures/graphs.ts:buildWeightedGraph",
+            ],
+            time: "O(V + E)",
+            space: "O(V + E)",
+            gotcha:
+              "Use `Array.from({ length: n }, () => [])`, not `new Array(n).fill([])`, or every node shares one list.",
+          },
+          {
+            id: "grid-neighbors",
+            title: "Grid neighbours",
+            aliases: [
+              "4 directions",
+              "matrix neighbors",
+              "in bounds",
+              "up down left right",
+              "directions",
+              "generator",
+            ],
+            code: ["structures/graphs.ts:gridNeighbors"],
+            time: "O(1) per cell",
+            space: "O(1)",
+            useWhen:
+              "Any grid problem: islands, flood fill, shortest path in a maze. Works for `number[][]` and `string[]` grids.",
+          },
+          {
+            id: "graph-usage",
+            title: "Using the helpers",
+            aliases: ["graph example"],
+            code: ["structures/graphs.ts:demoGraphs"],
+          },
+        ],
+      },
     ],
   },
 ];
