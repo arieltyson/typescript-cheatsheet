@@ -752,6 +752,65 @@ export const site: Part[] = [
           },
         ],
       },
+      {
+        id: "stack-queue",
+        title: "Stack & queue",
+        entries: [
+          {
+            id: "stack",
+            title: "Stack with an array",
+            aliases: ["lifo", "push pop", "peek", "undo"],
+            code: ["structures/stack_queue.ts:demoStack"],
+          },
+          {
+            id: "head-index-queue",
+            title: "Queue with a head index (inline)",
+            aliases: [
+              "fifo",
+              "bfs queue",
+              "avoid shift",
+              "queue without class",
+            ],
+            code: ["structures/stack_queue.ts:demoHeadIndexQueue"],
+            useWhen:
+              "BFS and other one-off queues. The array keeps every item, which is fine when the total is bounded.",
+            gotcha: "`queue.shift()` in a loop makes BFS O(n^2).",
+          },
+          {
+            id: "queue-class",
+            title: "Queue class",
+            aliases: [
+              "fifo",
+              "enqueue",
+              "dequeue",
+              "deque",
+              "o(1) queue",
+            ],
+            code: [
+              "structures/stack_queue.ts:Queue",
+              "structures/stack_queue.ts:demoQueue",
+            ],
+            time: "O(1) amortized per operation",
+            space: "O(n)",
+            useWhen:
+              "A long-running queue where memory must be released as items leave.",
+          },
+          {
+            id: "valid-brackets",
+            title: "Balanced brackets",
+            aliases: [
+              "valid parentheses",
+              "matching brackets",
+              "stack template",
+            ],
+            code: ["structures/stack_queue.ts:isBalanced"],
+            time: "O(n)",
+            space: "O(n)",
+            useWhen:
+              "Matching pairs, nesting, or undoing the most recent thing first.",
+          },
+        ],
+      },
     ],
   },
 ];
