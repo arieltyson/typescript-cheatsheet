@@ -116,6 +116,185 @@ export const site: Part[] = [
           },
         ],
       },
+      {
+        id: "strings",
+        title: "Strings",
+        entries: [
+          {
+            id: "slicing",
+            title: "Slicing & reversing",
+            aliases: [
+              "substring",
+              "reverse string",
+              "last character",
+              "at",
+            ],
+            code: ["syntax/strings.ts:demoSlicing"],
+            gotcha:
+              "`length` and indexes count UTF-16 units: an emoji is 2. `[...text]` splits by character.",
+          },
+          {
+            id: "split-join",
+            title: "split, trim & join",
+            aliases: [
+              "tokenize",
+              "words",
+              "parse line",
+              "split whitespace",
+              "string to array",
+              "map number",
+            ],
+            code: ["syntax/strings.ts:demoSplitJoin"],
+          },
+          {
+            id: "string-checks",
+            title: "Case & character checks",
+            aliases: [
+              "isalnum",
+              "isdigit",
+              "is letter",
+              "lowercase",
+              "uppercase",
+              "regex test",
+            ],
+            code: ["syntax/strings.ts:demoCaseAndChecks"],
+          },
+          {
+            id: "string-search",
+            title: "includes, indexOf, replace & count",
+            aliases: [
+              "substring search",
+              "contains",
+              "startsWith",
+              "endsWith",
+              "replaceAll",
+            ],
+            code: ["syntax/strings.ts:demoSearch"],
+            gotcha:
+              "`replace` with a string replaces only the first match. Use `replaceAll` or a `/g` regex.",
+          },
+          {
+            id: "build-strings",
+            title: "Building strings",
+            aliases: [
+              "concatenate",
+              "string builder",
+              "immutable",
+              "repeat",
+              "clean string",
+              "palindrome cleanup",
+            ],
+            code: ["syntax/strings.ts:demoBuildStrings"],
+            gotcha:
+              '`text[0] = "b"` does nothing (and is a type error). Convert to an array, edit, join.',
+          },
+          {
+            id: "char-codes",
+            title: "Character codes & letter counts",
+            aliases: [
+              "ascii",
+              "charCodeAt",
+              "fromCharCode",
+              "anagram",
+              "frequency array",
+              "26 letters",
+            ],
+            code: ["syntax/strings.ts:demoCharacterCodes"],
+          },
+        ],
+      },
+      {
+        id: "formatting",
+        title: "Template literals & number formatting",
+        entries: [
+          {
+            id: "format-money",
+            title: "Format money: dollars and cents",
+            aliases: [
+              "money",
+              "currency",
+              "price",
+              "Intl.NumberFormat",
+              "two decimals",
+              "negative money",
+              "thousands separator",
+            ],
+            code: ["syntax/formatting.ts:demoMoney"],
+            gotcha:
+              "Create the formatter once and reuse it; constructing `Intl.NumberFormat` is slow.",
+          },
+          {
+            id: "money-in-cents",
+            title: "Store money as integer cents",
+            aliases: [
+              "float precision",
+              "0.1 + 0.2",
+              "EPSILON",
+              "parse price",
+              "cents to dollars",
+            ],
+            code: ["syntax/formatting.ts:demoCents"],
+            useWhen:
+              "Any calculation with money. Convert to cents on input, format only for display.",
+          },
+          {
+            id: "number-formats",
+            title: "toFixed, separators & percent",
+            aliases: [
+              "decimal places",
+              "toLocaleString",
+              "percentage",
+              "compact",
+              "1.5M",
+            ],
+            code: ["syntax/formatting.ts:demoNumberFormats"],
+            gotcha:
+              "`toFixed` returns a string. Wrap it in `Number(...)` to keep calculating.",
+          },
+          {
+            id: "padding",
+            title: "Padding, alignment & template literals",
+            aliases: [
+              "padStart",
+              "padEnd",
+              "zero pad",
+              "align columns",
+              "interpolation",
+              "string format",
+            ],
+            code: ["syntax/formatting.ts:demoPadding"],
+          },
+          {
+            id: "number-bases",
+            title: "Binary, hex & parsing numbers",
+            aliases: [
+              "toString(2)",
+              "parseInt",
+              "base 2",
+              "base 16",
+              "Number()",
+              "NaN",
+            ],
+            code: ["syntax/formatting.ts:demoNumberBases"],
+            gotcha:
+              "`parseInt` stops at the first invalid character; `Number` rejects the whole string. Always pass the radix to `parseInt`.",
+          },
+          {
+            id: "rounding",
+            title: "Rounding, trunc, floor & ceil",
+            aliases: [
+              "round half",
+              "round to 2 decimals",
+              "truncate",
+              "floor",
+              "ceil",
+            ],
+            code: ["syntax/formatting.ts:demoRounding"],
+            gotcha:
+              "`Math.round(-2.5)` is -2, not -3. For money, round integer cents.",
+          },
+        ],
+      },
     ],
   },
 ];
