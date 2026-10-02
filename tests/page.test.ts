@@ -4,7 +4,14 @@ import { mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { test } from "node:test";
 import { site } from "../content/site.ts";
-import { build } from "../tools/build.ts";
+import {
+  PAGE_BUDGET_GZIP,
+  build,
+  gzipSize,
+  sha256Source,
+} from "../tools/build.ts";
+import { WEB } from "../tools/paths.ts";
+import { MARK_BLUE } from "../web/tokens.ts";
 import { allEntries } from "../tools/manifest.ts";
 
 const output = `${mkdtempSync(`${tmpdir()}/page-`)}/dist/`;
@@ -74,4 +81,26 @@ test("buttons have names", () => {
 
 test("language is set", () => {
   assert.match(page, /<html lang="en">/);
+});
+
+test("page is within budget", () => {
+  assert.ok(gzipSize(page) <= PAGE_BUDGET_GZIP);
+});
+
+test("CSP allows exactly the inline code", () => {
+  const policy =
+    /Content-Security-Policy" content="([^"]+)"/.exec(page)?.[1] ?? "";
+  assert.ok(policy.includes("default-src 'none'"));
+  const inline = [
+    ...page.matchAll(/<script>([\s\S]*?)<\/script>/g),
+    ...page.matchAll(/<style>([\s\S]*?)<\/style>/g),
+  ].map((match) => match[1] as string);
+  assert.equal(inline.length, 3);
+  for (const code of inline)
+    assert.ok(policy.includes(sha256Source(code)));
+});
+
+test("icon tile is the mark blue", () => {
+  const icon = readFileSync(`${WEB}favicon.svg`, "utf8");
+  assert.ok(icon.includes(`fill="${MARK_BLUE}"`));
 });

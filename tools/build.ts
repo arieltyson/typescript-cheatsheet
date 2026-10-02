@@ -1,11 +1,14 @@
 // Compile content/site.ts and snippets/ into dist/index.html.
+import { createHash } from "node:crypto";
 import {
+  copyFileSync,
   mkdirSync,
   readFileSync,
   rmSync,
   writeFileSync,
 } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { gzipSync } from "node:zlib";
 import { site } from "../content/site.ts";
 import { cssVariables } from "../web/tokens.ts";
 import { highlight } from "./highlight.ts";
@@ -20,6 +23,41 @@ import {
 import { DIST, SNIPPETS, WEB } from "./paths.ts";
 import { assertsAsResults } from "./results.ts";
 import { extract } from "./source.ts";
+
+const ASSETS = [
+  "favicon.svg",
+  "fonts/jetbrains-mono-subset.woff2",
+  "fonts/OFL.txt",
+];
+export const PAGE_BUDGET_GZIP = 150_000;
+export const SCRIPT_BUDGET_GZIP = 4_096;
+
+export class BudgetError extends Error {}
+
+export function gzipSize(text: string): number {
+  return gzipSync(text).length;
+}
+
+export function sha256Source(text: string): string {
+  const digest = createHash("sha256").update(text).digest("base64");
+  return `'sha256-${digest}'`;
+}
+
+/** Allow only this page's own inline code and same-origin files. */
+export function contentSecurityPolicy(
+  styles: string,
+  scripts: string[],
+): string {
+  return [
+    "default-src 'none'",
+    `script-src ${scripts.map(sha256Source).join(" ")}`,
+    `style-src ${sha256Source(styles)}`,
+    "font-src 'self'",
+    "img-src 'self'",
+    "base-uri 'none'",
+    "form-action 'none'",
+  ].join("; ");
+}
 
 export function escapeHtml(text: string): string {
   return text
@@ -165,23 +203,36 @@ export function jumpIndex(): string {
 export function renderPage(): string {
   validateSite(site, SNIPPETS);
   const template = readFileSync(`${WEB}template.html`, "utf8");
-  const styles = readFileSync(`${WEB}styles.css`, "utf8");
+  const styles =
+    cssVariables() + readFileSync(`${WEB}styles.css`, "utf8");
+  const script = readFileSync(`${WEB}app.js`, "utf8");
+  const themeScript = readFileSync(`${WEB}theme.js`, "utf8");
+  if (gzipSize(script) > SCRIPT_BUDGET_GZIP) {
+    throw new BudgetError("app.js is over its gzipped size budget");
+  }
   return fill(template, {
-    styles: cssVariables() + styles,
+    csp: contentSecurityPolicy(styles, [themeScript, script]),
+    styles,
     toc: renderToc(),
     "jump-index": jumpIndex(),
     content: site.map(renderPart).join("\n"),
-    script: readFileSync(`${WEB}app.js`, "utf8"),
-    "theme-script": readFileSync(`${WEB}theme.js`, "utf8"),
+    script,
+    "theme-script": themeScript,
   });
 }
 
 export function build(outputDir: string = DIST): string {
   const page = renderPage();
+  if (gzipSize(page) > PAGE_BUDGET_GZIP) {
+    throw new BudgetError("index.html is over its gzipped size budget");
+  }
   rmSync(outputDir, { recursive: true, force: true });
-  mkdirSync(outputDir, { recursive: true });
+  mkdirSync(`${outputDir}fonts`, { recursive: true });
   const index = `${outputDir}index.html`;
   writeFileSync(index, page);
+  for (const asset of ASSETS) {
+    copyFileSync(`${WEB}${asset}`, `${outputDir}${asset}`);
+  }
   return index;
 }
 
