@@ -1533,6 +1533,175 @@ export const site: Part[] = [
           },
         ],
       },
+      {
+        id: "backtracking",
+        title: "Backtracking",
+        intro:
+          "Choose, explore, unchoose. Push a copy (`[...path]`) into the results, never `path` itself.",
+        entries: [
+          {
+            id: "subsets",
+            title: "Subsets",
+            aliases: ["power set", "all subsets", "choose or skip"],
+            code: ["algorithms/backtracking.ts:subsets"],
+            time: "O(n * 2^n)",
+            space: "O(n) besides the output",
+          },
+          {
+            id: "combinations",
+            title: "Combinations of size k",
+            aliases: [
+              "n choose k",
+              "combination sum",
+              "pick k",
+              "start index",
+            ],
+            code: ["algorithms/backtracking.ts:combinations"],
+            time: "O(k * C(n, k))",
+            space: "O(k) besides the output",
+            gotcha:
+              "For combination sum, call `explore(i)` instead of `explore(i + 1)` to allow reuse, and stop once the running total is too large.",
+          },
+          {
+            id: "permutations",
+            title: "Permutations",
+            aliases: ["all orderings", "arrangements", "used array"],
+            code: ["algorithms/backtracking.ts:permutations"],
+            time: "O(n * n!)",
+            space: "O(n) besides the output",
+            gotcha:
+              "With duplicate values, sort first and skip `values[i]` when it equals `values[i - 1]` and `used[i - 1]` is false.",
+          },
+        ],
+      },
+      {
+        id: "dynamic-programming",
+        title: "Dynamic programming",
+        intro:
+          "Define the state, write the recurrence, then pick top-down (memo in a `Map`) or bottom-up (a table). If each state only needs the last row, keep just that row.",
+        entries: [
+          {
+            id: "memo-top-down",
+            title: "Top-down with a Map memo",
+            aliases: [
+              "memoization",
+              "cache",
+              "recursion with memo",
+              "top down dp",
+            ],
+            code: ["algorithms/dynamic_programming.ts:climbStairsMemo"],
+            time: "O(n)",
+            space: "O(n)",
+            useWhen:
+              "The recurrence is easy to write recursively. For two-part states, key the Map with `${i},${j}`.",
+            gotcha:
+              "Deep recursion overflows Node's call stack at roughly 10,000 frames. Switch to bottom-up.",
+          },
+          {
+            id: "climbing-stairs",
+            title: "Bottom-up with O(1) space",
+            aliases: [
+              "climbing stairs",
+              "fibonacci",
+              "rolling variables",
+              "bottom up dp",
+            ],
+            code: ["algorithms/dynamic_programming.ts:climbStairs"],
+            time: "O(n)",
+            space: "O(1)",
+          },
+          {
+            id: "house-robber",
+            title: "House robber",
+            aliases: [
+              "no adjacent",
+              "max non adjacent sum",
+              "take or skip",
+            ],
+            code: ["algorithms/dynamic_programming.ts:houseRobber"],
+            time: "O(n)",
+            space: "O(1)",
+          },
+          {
+            id: "coin-change",
+            title: "Coin change (fewest coins)",
+            aliases: [
+              "minimum coins",
+              "unbounded knapsack",
+              "make change",
+              "amount",
+            ],
+            code: ["algorithms/dynamic_programming.ts:coinChange"],
+            time: "O(amount * coins)",
+            space: "O(amount)",
+            gotcha:
+              "To count the ways instead, put the coin loop outside the amount loop and add: `ways[total] += ways[total - coin]`.",
+          },
+          {
+            id: "knapsack",
+            title: "0/1 knapsack",
+            aliases: [
+              "knapsack",
+              "partition equal subset sum",
+              "each item once",
+              "capacity",
+              "subset sum",
+            ],
+            code: ["algorithms/dynamic_programming.ts:knapsack"],
+            time: "O(n * capacity)",
+            space: "O(capacity)",
+            gotcha:
+              "Loop the capacity downward for 0/1 (each item once). Upward lets an item be reused.",
+          },
+          {
+            id: "grid-paths",
+            title: "Grid paths (one row of state)",
+            aliases: [
+              "unique paths",
+              "2d dp",
+              "robot paths",
+              "rolling row",
+            ],
+            code: ["algorithms/dynamic_programming.ts:uniqueGridPaths"],
+            time: "O(rows * cols)",
+            space: "O(cols)",
+          },
+          {
+            id: "lcs",
+            title: "Longest common subsequence",
+            aliases: [
+              "lcs",
+              "edit distance",
+              "two strings dp",
+              "2d table",
+            ],
+            code: [
+              "algorithms/dynamic_programming.ts:longestCommonSubsequence",
+            ],
+            time: "O(n * m)",
+            space: "O(n * m)",
+            gotcha:
+              "Edit distance has the same table shape: on a mismatch take `1 + min(left, up, diagonal)`.",
+          },
+          {
+            id: "lis",
+            title: "Longest increasing subsequence",
+            aliases: [
+              "lis",
+              "patience sorting",
+              "increasing subsequence",
+              "tails array",
+            ],
+            code: [
+              "algorithms/dynamic_programming.ts:longestIncreasingSubsequence",
+            ],
+            time: "O(n log n)",
+            space: "O(n)",
+            gotcha:
+              "`tails` is not the subsequence itself; only its length is meaningful. The inner loop is the lower bound search from Binary search.",
+          },
+        ],
+      },
     ],
   },
 ];
