@@ -388,6 +388,65 @@ export const site: Part[] = [
           },
         ],
       },
+      {
+        id: "types",
+        title: "Types for interviews",
+        entries: [
+          {
+            id: "type-aliases",
+            title: "type vs interface, optional fields",
+            aliases: [
+              "type alias",
+              "interface",
+              "object type",
+              "optional property",
+              "nullable",
+            ],
+            code: ["syntax/types.ts:demoTypeAliases"],
+            gotcha:
+              "Either works for object shapes. Only `type` can name a union or a tuple.",
+          },
+          {
+            id: "unions",
+            title: "Unions & narrowing",
+            aliases: [
+              "discriminated union",
+              "typeof",
+              "type guard",
+              "union type",
+              "tagged union",
+            ],
+            code: ["syntax/types.ts:demoUnions"],
+          },
+          {
+            id: "generics",
+            title: "Generics, tuples, Record & as const",
+            aliases: [
+              "generic function",
+              "tuple",
+              "Record",
+              "readonly",
+              "as const",
+              "directions",
+            ],
+            code: ["syntax/types.ts:demoGenerics"],
+          },
+          {
+            id: "nullish",
+            title: "Optional chaining, ?? and !",
+            aliases: [
+              "optional chaining",
+              "nullish coalescing",
+              "non-null assertion",
+              "undefined",
+              "default value",
+            ],
+            code: ["syntax/types.ts:demoNullish"],
+            gotcha:
+              "`!` removes the compiler's check without adding a runtime one. A wrong `!` crashes later, far from the cause.",
+          },
+        ],
+      },
     ],
   },
 ];
