@@ -13,10 +13,12 @@ import {
   type Entry,
   type Part,
   type Section,
+  type Table,
   parseCodeRef,
   validateSite,
 } from "./manifest.ts";
 import { DIST, SNIPPETS, WEB } from "./paths.ts";
+import { assertsAsResults } from "./results.ts";
 import { extract } from "./source.ts";
 
 export function escapeHtml(text: string): string {
@@ -46,22 +48,69 @@ export function fill(
   return page;
 }
 
-function renderEntry(entry: Entry): string {
-  const blocks = (entry.code ?? []).map((ref) => {
-    const source = extract(SNIPPETS, parseCodeRef(ref));
-    return `<pre><code>${highlight(source)}</code></pre>`;
-  });
+/** Escape text and turn `backticks` into <code> elements. */
+export function inline(text: string): string {
+  return escapeHtml(text).replace(/`([^`]+)`/g, "<code>$1</code>");
+}
+
+function renderCode(ref: string): string {
+  const codeRef = parseCodeRef(ref);
+  let source = extract(SNIPPETS, codeRef);
+  if (codeRef.isDemo) source = assertsAsResults(source);
+  return `<pre><code>${highlight(source)}</code></pre>`;
+}
+
+function renderTable(table: Table): string {
+  const cells = (row: string[], tag: string) =>
+    row.map((cell) => `<${tag}>${inline(cell)}</${tag}>`).join("");
+  const rows = table.rows
+    .map((row) => `<tr>${cells(row, "td")}</tr>`)
+    .join("");
   return (
-    `<article class="entry" id="${entry.id}">` +
-    `<h4>${escapeHtml(entry.title)}</h4>${blocks.join("")}</article>`
+    `<table><thead><tr>${cells(table.header, "th")}</tr></thead>` +
+    `<tbody>${rows}</tbody></table>`
   );
 }
 
+function renderMeta(entry: Entry): string {
+  if (entry.table) return "";
+  const refs = (entry.code ?? []).map(parseCodeRef);
+  let text = "Syntax";
+  if (entry.time) text = `Time ${entry.time} · Space ${entry.space}`;
+  else if (refs.every((ref) => ref.isType)) text = "Definition";
+  return `<p class="meta">${escapeHtml(text)}</p>`;
+}
+
+function labelled(className: string, label: string, text: string) {
+  return (
+    `<p class="${className}"><span class="label">${label}</span> ` +
+    `${inline(text)}</p>`
+  );
+}
+
+function renderEntry(entry: Entry): string {
+  return [
+    `<article class="entry" id="${entry.id}">`,
+    `<h4><a href="#${entry.id}">${inline(entry.title)}</a></h4>`,
+    renderMeta(entry),
+    entry.useWhen
+      ? labelled("use-when", "Use when:", entry.useWhen)
+      : "",
+    ...(entry.code ?? []).map(renderCode),
+    entry.table ? renderTable(entry.table) : "",
+    entry.gotcha ? labelled("gotcha", "Gotcha:", entry.gotcha) : "",
+    "</article>",
+  ].join("");
+}
+
 function renderSection(section: Section): string {
+  const intro = section.intro
+    ? `<p class="section-intro">${inline(section.intro)}</p>`
+    : "";
   const entries = section.entries.map(renderEntry).join("\n");
   return (
     `<section class="section" id="${section.id}">` +
-    `<h3>${escapeHtml(section.title)}</h3>\n${entries}</section>`
+    `<h3>${inline(section.title)}</h3>${intro}\n${entries}</section>`
   );
 }
 
