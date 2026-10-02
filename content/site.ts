@@ -811,6 +811,54 @@ export const site: Part[] = [
           },
         ],
       },
+      {
+        id: "heap",
+        title: "Heap (priority queue)",
+        intro:
+          "TypeScript has no built-in heap. This one takes a comparator, like `sort`, so the same class is a min-heap, a max-heap or a heap of tuples.",
+        entries: [
+          {
+            id: "priority-queue",
+            title: "PriorityQueue class",
+            aliases: [
+              "heap",
+              "min heap",
+              "binary heap",
+              "heapify",
+              "sift up",
+              "sift down",
+            ],
+            code: ["structures/heap.ts:PriorityQueue"],
+            time: "O(log n) push and pop, O(1) peek, O(n) build",
+            space: "O(n)",
+            gotcha:
+              "LeetCode preloads `MinPriorityQueue` from @datastructures-js; most interview platforms do not. This class works everywhere.",
+          },
+          {
+            id: "min-max-heap",
+            title: "Min-heap & max-heap",
+            aliases: [
+              "max heap",
+              "largest first",
+              "smallest first",
+              "kth largest",
+              "peek",
+            ],
+            code: ["structures/heap.ts:demoPriorityQueue"],
+          },
+          {
+            id: "heap-tuples",
+            title: "Priorities & tie-breakers",
+            aliases: [
+              "tuple heap",
+              "task scheduler",
+              "custom priority",
+              "compare tuples",
+            ],
+            code: ["structures/heap.ts:demoHeapOfTuples"],
+          },
+        ],
+      },
     ],
   },
 ];
