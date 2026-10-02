@@ -859,6 +859,175 @@ export const site: Part[] = [
           },
         ],
       },
+      {
+        id: "linked-list",
+        title: "Linked list",
+        entries: [
+          {
+            id: "list-node",
+            title: "ListNode",
+            aliases: ["node class", "singly linked list"],
+            code: ["structures/linked_list.ts:ListNode"],
+            gotcha:
+              "Matches LeetCode's definition: `val`, `next`, and `null` (not `undefined`) at the end.",
+          },
+          {
+            id: "build-linked-list",
+            title: "Build & read a linked list",
+            aliases: [
+              "array to linked list",
+              "print linked list",
+              "test helper",
+              "dummy head",
+            ],
+            code: [
+              "structures/linked_list.ts:buildList",
+              "structures/linked_list.ts:listValues",
+            ],
+            time: "O(n)",
+            space: "O(n)",
+            useWhen:
+              "Testing your own solution. A dummy head removes the empty-list special case.",
+          },
+          {
+            id: "reverse-linked-list",
+            title: "Reverse a linked list",
+            aliases: [
+              "reverse list",
+              "in place reversal",
+              "previous current next",
+            ],
+            code: ["structures/linked_list.ts:reverseList"],
+            time: "O(n)",
+            space: "O(1)",
+          },
+          {
+            id: "middle-node",
+            title: "Middle node (fast & slow pointers)",
+            aliases: ["tortoise and hare", "find middle", "half"],
+            code: ["structures/linked_list.ts:middleNode"],
+            time: "O(n)",
+            space: "O(1)",
+          },
+          {
+            id: "linked-list-cycle",
+            title: "Detect a cycle",
+            aliases: ["floyd", "loop detection", "cycle"],
+            code: ["structures/linked_list.ts:hasCycle"],
+            time: "O(n)",
+            space: "O(1)",
+            gotcha:
+              "Compare nodes with `===`, never their values: two nodes can hold the same value.",
+          },
+          {
+            id: "merge-sorted-lists",
+            title: "Merge two sorted lists",
+            aliases: ["merge linked lists", "dummy node", "merge step"],
+            code: ["structures/linked_list.ts:mergeSorted"],
+            time: "O(n + m)",
+            space: "O(1)",
+          },
+        ],
+      },
+      {
+        id: "binary-tree",
+        title: "Binary tree & BST",
+        entries: [
+          {
+            id: "tree-node",
+            title: "TreeNode",
+            aliases: ["binary tree node", "tree class"],
+            code: ["structures/binary_tree.ts:TreeNode"],
+          },
+          {
+            id: "build-tree",
+            title: "Build a tree from a level-order list",
+            aliases: [
+              "array to tree",
+              "leetcode tree input",
+              "test helper",
+              "deserialize",
+            ],
+            code: ["structures/binary_tree.ts:buildTree"],
+            time: "O(n)",
+            space: "O(n)",
+            useWhen:
+              "Testing your own tree solution with LeetCode-style input like `[1, null, 2, 3]`.",
+          },
+          {
+            id: "tree-traversals",
+            title: "Preorder, inorder & postorder",
+            aliases: [
+              "dfs traversal",
+              "tree walk",
+              "recursive traversal",
+              "sorted order of bst",
+            ],
+            code: ["structures/binary_tree.ts:traversals"],
+            time: "O(n)",
+            space: "O(h) stack, h = height",
+            gotcha:
+              "Inorder traversal of a BST visits values in sorted order.",
+          },
+          {
+            id: "inorder-iterative",
+            title: "Inorder without recursion",
+            aliases: [
+              "iterative traversal",
+              "explicit stack",
+              "kth smallest in bst",
+            ],
+            code: ["structures/binary_tree.ts:inorderIterative"],
+            time: "O(n)",
+            space: "O(h)",
+            useWhen:
+              "The tree may be deep enough to overflow the call stack, or you need to stop early.",
+          },
+          {
+            id: "level-order",
+            title: "Level order (BFS)",
+            aliases: [
+              "breadth first",
+              "levels",
+              "right side view",
+              "zigzag",
+              "tree bfs",
+            ],
+            code: ["structures/binary_tree.ts:levelOrder"],
+            time: "O(n)",
+            space: "O(w), w = widest level",
+          },
+          {
+            id: "max-depth",
+            title: "Maximum depth",
+            aliases: ["height", "tree height", "depth of tree"],
+            code: ["structures/binary_tree.ts:maxDepth"],
+            time: "O(n)",
+            space: "O(h)",
+          },
+          {
+            id: "bst-search-insert",
+            title: "BST search & insert",
+            aliases: ["binary search tree", "lookup", "add to bst"],
+            code: [
+              "structures/binary_tree.ts:bstSearch",
+              "structures/binary_tree.ts:bstInsert",
+            ],
+            time: "O(h): O(log n) balanced, O(n) skewed",
+            space: "O(1) search, O(h) insert",
+          },
+          {
+            id: "validate-bst",
+            title: "Validate a BST",
+            aliases: ["is valid bst", "bounds", "min max range"],
+            code: ["structures/binary_tree.ts:isValidBst"],
+            time: "O(n)",
+            space: "O(h)",
+            gotcha:
+              "Checking a node only against its children is wrong. Every node must fit the bounds set by all its ancestors.",
+          },
+        ],
+      },
     ],
   },
 ];
