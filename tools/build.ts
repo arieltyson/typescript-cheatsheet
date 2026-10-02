@@ -172,6 +172,7 @@ export function renderPage(): string {
     "jump-index": jumpIndex(),
     content: site.map(renderPart).join("\n"),
     script: readFileSync(`${WEB}app.js`, "utf8"),
+    "theme-script": readFileSync(`${WEB}theme.js`, "utf8"),
   });
 }
 
