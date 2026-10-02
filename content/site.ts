@@ -447,6 +447,125 @@ export const site: Part[] = [
           },
         ],
       },
+      {
+        id: "numbers",
+        title: "Numbers & math",
+        entries: [
+          {
+            id: "integer-division",
+            title: "Integer division & modulo",
+            aliases: [
+              "floor division",
+              "truncate",
+              "negative modulo",
+              "ceil division",
+              "remainder",
+            ],
+            code: ["syntax/numbers.ts:demoIntegerDivision"],
+            gotcha:
+              "There is no integer division operator. `Math.floor` and `Math.trunc` disagree for negatives; pick deliberately.",
+          },
+          {
+            id: "big-numbers",
+            title: "Safe integers, BigInt & mod 1e9+7",
+            aliases: [
+              "overflow",
+              "precision",
+              "MAX_SAFE_INTEGER",
+              "bigint",
+              "modular multiplication",
+              "1e9+7",
+            ],
+            code: ["syntax/numbers.ts:demoBigNumbers"],
+            gotcha:
+              "BigInt and number never mix: `1n + 1` is a TypeError. Convert with `BigInt(x)` and `Number(x)`.",
+          },
+          {
+            id: "math",
+            title: "Math helpers & Infinity",
+            aliases: [
+              "sqrt",
+              "log2",
+              "abs",
+              "hypot",
+              "infinity",
+              "isInteger",
+            ],
+            code: ["syntax/numbers.ts:demoMath"],
+          },
+          {
+            id: "gcd",
+            title: "gcd & lcm",
+            aliases: [
+              "greatest common divisor",
+              "least common multiple",
+              "euclid",
+            ],
+            code: [
+              "syntax/numbers.ts:gcd",
+              "syntax/numbers.ts:demoGcd",
+            ],
+            time: "O(log min(a, b))",
+            space: "O(1)",
+          },
+        ],
+      },
+      {
+        id: "control-classes",
+        title: "Loops, destructuring & classes",
+        entries: [
+          {
+            id: "loops",
+            title: "for...of vs for...in",
+            aliases: [
+              "loop",
+              "iterate",
+              "reverse loop",
+              "forEach",
+              "for in string keys",
+            ],
+            code: ["syntax/control.ts:demoLoops"],
+            gotcha:
+              "`forEach` cannot `break` or `return` early. Use `for...of`.",
+          },
+          {
+            id: "destructuring",
+            title: "Destructuring, spread & copies",
+            aliases: [
+              "swap",
+              "rest",
+              "spread",
+              "default value",
+              "structuredClone",
+              "deep copy",
+              "shallow copy",
+            ],
+            code: ["syntax/control.ts:demoDestructuring"],
+            gotcha:
+              "Backtracking: push `[...path]` into the results, not `path`, or every result changes later.",
+          },
+          {
+            id: "classes",
+            title: "A class with a comparator & private state",
+            aliases: [
+              "class",
+              "constructor",
+              "static",
+              "#private",
+              "readonly",
+              "compare objects",
+              "sort objects",
+            ],
+            code: [
+              "syntax/control.ts:Task",
+              "syntax/control.ts:Counter",
+              "syntax/control.ts:demoClasses",
+            ],
+            gotcha:
+              "Type stripping forbids constructor parameter properties (`constructor(private x)`); declare fields explicitly.",
+          },
+        ],
+      },
     ],
   },
 ];
