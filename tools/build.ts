@@ -143,6 +143,25 @@ function renderToc(): string {
   );
 }
 
+/** Return [id, title, context, keywords, kind] jump-list rows. */
+export function jumpIndex(): string {
+  const rows = site.flatMap((part) => [
+    [part.id, part.title, "Part", "", "part"],
+    ...part.sections.flatMap((section) => [
+      [section.id, section.title, part.title, "", "section"],
+      ...section.entries.map((entry) => [
+        entry.id,
+        entry.title,
+        section.title,
+        (entry.aliases ?? []).join(" "),
+        "entry",
+      ]),
+    ]),
+  ]);
+  // "</" would end the <script> element early
+  return JSON.stringify(rows).replaceAll("</", "<\\/");
+}
+
 export function renderPage(): string {
   validateSite(site, SNIPPETS);
   const template = readFileSync(`${WEB}template.html`, "utf8");
@@ -150,6 +169,7 @@ export function renderPage(): string {
   return fill(template, {
     styles: cssVariables() + styles,
     toc: renderToc(),
+    "jump-index": jumpIndex(),
     content: site.map(renderPart).join("\n"),
     script: readFileSync(`${WEB}app.js`, "utf8"),
   });

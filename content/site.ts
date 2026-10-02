@@ -697,7 +697,7 @@ export const site: Part[] = [
           },
           {
             id: "heap-costs",
-            title: "Heap costs (PriorityQueue below)",
+            title: "PriorityQueue costs",
             aliases: ["priority queue complexity", "heap big o"],
             table: {
               header: ["Operation", "Code", "Time"],
