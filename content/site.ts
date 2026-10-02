@@ -1402,6 +1402,112 @@ export const site: Part[] = [
           },
         ],
       },
+      {
+        id: "bfs",
+        title: "Breadth-first search",
+        entries: [
+          {
+            id: "bfs-graph",
+            title: "BFS on a graph",
+            aliases: [
+              "breadth first search",
+              "level by level",
+              "queue traversal",
+              "nearest first",
+            ],
+            code: ["algorithms/graph_search.ts:bfsOrder"],
+            time: "O(V + E)",
+            space: "O(V)",
+            gotcha:
+              "Mark a node visited when you enqueue it, not when you dequeue it, or it can be queued many times.",
+          },
+          {
+            id: "bfs-grid",
+            title: "Shortest path in a grid",
+            aliases: [
+              "maze",
+              "unweighted shortest path",
+              "fewest steps",
+              "grid bfs",
+              "rotting oranges",
+              "multi source bfs",
+            ],
+            code: ["algorithms/graph_search.ts:shortestPathGrid"],
+            time: "O(rows * cols)",
+            space: "O(rows * cols)",
+            useWhen:
+              "Fewest moves when every move costs the same. Uses `gridNeighbors` from the Graphs section. For several starting points, queue them all at step 0.",
+          },
+        ],
+      },
+      {
+        id: "dfs",
+        title: "Depth-first search",
+        entries: [
+          {
+            id: "dfs-recursive",
+            title: "DFS, recursive",
+            aliases: [
+              "depth first search",
+              "recursion",
+              "explore",
+              "connected",
+            ],
+            code: ["algorithms/graph_search.ts:dfsRecursive"],
+            time: "O(V + E)",
+            space: "O(V)",
+            gotcha:
+              "Node's call stack holds roughly 10,000 frames. Use the iterative version for long paths.",
+          },
+          {
+            id: "dfs-iterative",
+            title: "DFS, iterative",
+            aliases: ["explicit stack", "no recursion", "stack dfs"],
+            code: ["algorithms/graph_search.ts:dfsIterative"],
+            time: "O(V + E)",
+            space: "O(V + E)",
+          },
+          {
+            id: "number-of-islands",
+            title: "Number of islands",
+            aliases: [
+              "connected components in grid",
+              "flood fill",
+              "count regions",
+              "grid dfs",
+            ],
+            code: ["algorithms/graph_search.ts:countIslands"],
+            time: "O(rows * cols)",
+            space: "O(rows * cols)",
+          },
+        ],
+      },
+      {
+        id: "topological-sort",
+        title: "Topological sort",
+        entries: [
+          {
+            id: "kahns-algorithm",
+            title: "Kahn's algorithm",
+            aliases: [
+              "topological sort",
+              "course schedule",
+              "dependencies",
+              "in-degree",
+              "build order",
+              "detect cycle directed graph",
+              "prerequisites",
+            ],
+            code: ["algorithms/topological_sort.ts:topologicalOrder"],
+            time: "O(V + E)",
+            space: "O(V + E)",
+            useWhen:
+              "Ordering tasks with prerequisites, or checking a directed graph for cycles.",
+            gotcha:
+              "Course Schedule gives pairs as `[course, prerequisite]`, so the edge is `[prerequisite, course]`.",
+          },
+        ],
+      },
     ],
   },
 ];
