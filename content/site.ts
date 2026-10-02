@@ -1340,6 +1340,68 @@ export const site: Part[] = [
           },
         ],
       },
+      {
+        id: "monotonic-stack",
+        title: "Monotonic stack",
+        entries: [
+          {
+            id: "next-greater",
+            title: "Next greater element",
+            aliases: [
+              "daily temperatures",
+              "next larger",
+              "stock span",
+              "monotonic decreasing stack",
+            ],
+            code: ["algorithms/monotonic_stack.ts:nextGreater"],
+            time: "O(n)",
+            space: "O(n)",
+            useWhen:
+              "For each item, find the nearest item to one side that is larger or smaller.",
+            gotcha:
+              "Each index is pushed and popped once, so the nested while loop is still O(n). For daily temperatures, store `i - popped` instead of the value.",
+          },
+        ],
+      },
+      {
+        id: "intervals",
+        title: "Intervals",
+        entries: [
+          {
+            id: "merge-intervals",
+            title: "Merge overlapping intervals",
+            aliases: [
+              "overlap",
+              "union of ranges",
+              "combine intervals",
+              "insert interval",
+            ],
+            code: [
+              "algorithms/intervals.ts:Interval",
+              "algorithms/intervals.ts:mergeIntervals",
+            ],
+            time: "O(n log n)",
+            space: "O(n)",
+            gotcha:
+              "Sort by start first. Touching intervals like `[1, 4]` and `[4, 5]` merge because of `<=`.",
+          },
+          {
+            id: "meeting-rooms",
+            title: "Minimum meeting rooms",
+            aliases: [
+              "meeting rooms ii",
+              "max overlap",
+              "concurrent intervals",
+              "platforms needed",
+            ],
+            code: ["algorithms/intervals.ts:minMeetingRooms"],
+            time: "O(n log n)",
+            space: "O(n)",
+            useWhen:
+              "The largest number of intervals open at the same moment. Uses `PriorityQueue` from the Heap section.",
+          },
+        ],
+      },
     ],
   },
 ];
