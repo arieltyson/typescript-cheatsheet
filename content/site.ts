@@ -1702,6 +1702,133 @@ export const site: Part[] = [
           },
         ],
       },
+      {
+        id: "sorting-selection",
+        title: "Sorting & selection",
+        entries: [
+          {
+            id: "merge-sort",
+            title: "Merge sort",
+            aliases: [
+              "divide and conquer",
+              "stable sort",
+              "merge step",
+              "sort implementation",
+              "count inversions",
+            ],
+            code: ["algorithms/sorting.ts:mergeSort"],
+            time: "O(n log n)",
+            space: "O(n)",
+            useWhen:
+              "You are asked to implement a sort, or to count something during the merge (inversions). Otherwise call `toSorted`.",
+          },
+          {
+            id: "quickselect",
+            title: "k-th largest (quickselect)",
+            aliases: [
+              "kth largest element",
+              "selection",
+              "median",
+              "partition",
+              "order statistic",
+            ],
+            code: ["algorithms/sorting.ts:kthLargest"],
+            time: "O(n) average, O(n^2) worst",
+            space: "O(n)",
+            gotcha:
+              "A fixed middle pivot can hit the O(n^2) worst case on crafted input. Pick `candidates[Math.floor(Math.random() * candidates.length)]` to avoid it.",
+          },
+          {
+            id: "top-k-heap",
+            title: "Top k with a size-k heap",
+            aliases: [
+              "k largest",
+              "top k elements",
+              "k closest",
+              "streaming top k",
+              "heap of size k",
+            ],
+            code: ["algorithms/sorting.ts:topKLargest"],
+            time: "O(n log k)",
+            space: "O(k)",
+            useWhen:
+              "k is much smaller than n, or the values arrive as a stream. Uses `PriorityQueue`; flip the comparator for the k smallest.",
+          },
+        ],
+      },
+      {
+        id: "bit-manipulation",
+        title: "Bit manipulation",
+        entries: [
+          {
+            id: "bit-tricks",
+            title: "Bit tricks",
+            aliases: [
+              "bitwise",
+              "and or xor",
+              "shift",
+              "set bit",
+              "clear bit",
+              "power of two",
+              "lowest set bit",
+            ],
+            code: ["algorithms/bits.ts:demoBits"],
+          },
+          {
+            id: "thirty-two-bits",
+            title: "The 32-bit limit",
+            aliases: [
+              "signed shift",
+              "unsigned shift",
+              ">>>",
+              "overflow bits",
+              "bigint mask",
+            ],
+            code: ["algorithms/bits.ts:demoThirtyTwoBits"],
+            gotcha:
+              "`&`, `|`, `^`, `<<` and `>>` convert numbers to 32-bit signed integers. Use `>>> 0` for unsigned, or `BigInt` past 32 bits.",
+          },
+          {
+            id: "bit-count",
+            title: "Count set bits",
+            aliases: [
+              "popcount",
+              "hamming weight",
+              "number of 1 bits",
+              "bit_count",
+            ],
+            code: ["algorithms/bits.ts:bitCount"],
+            time: "O(number of set bits)",
+            space: "O(1)",
+          },
+          {
+            id: "bitmask-subsets",
+            title: "Subsets as bitmasks",
+            aliases: [
+              "bitmask",
+              "mask",
+              "enumerate subsets",
+              "bitmask dp",
+            ],
+            code: ["algorithms/bits.ts:demoBitmaskSubsets"],
+          },
+          {
+            id: "single-number",
+            title: "Single number (XOR)",
+            aliases: [
+              "xor trick",
+              "find unique",
+              "appears once",
+              "missing number",
+            ],
+            code: ["algorithms/bits.ts:singleNumber"],
+            time: "O(n)",
+            space: "O(1)",
+            gotcha:
+              "`x ^ x === 0` and `x ^ 0 === x`, so pairs cancel. Missing number: XOR every index and every value.",
+          },
+        ],
+      },
     ],
   },
 ];
