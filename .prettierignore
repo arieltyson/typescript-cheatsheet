@@ -2,3 +2,4 @@ dist/
 package-lock.json
 web/fonts/
 *.md
+web/template.html

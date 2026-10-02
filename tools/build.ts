@@ -122,13 +122,36 @@ function renderPart(part: Part): string {
   );
 }
 
+function tocLink(anchor: string, title: string): string {
+  return `<a href="#${anchor}">${inline(title)}</a>`;
+}
+
+function renderToc(): string {
+  const parts = site
+    .map((part) => {
+      const sections = part.sections
+        .map(
+          (section) => `<li>${tocLink(section.id, section.title)}</li>`,
+        )
+        .join("");
+      return `<li>${tocLink(part.id, part.title)}<ol>${sections}</ol></li>`;
+    })
+    .join("");
+  return (
+    '<nav class="toc" aria-label="Contents">' +
+    `<p class="toc-title">Contents</p><ol>${parts}</ol></nav>`
+  );
+}
+
 export function renderPage(): string {
   validateSite(site, SNIPPETS);
   const template = readFileSync(`${WEB}template.html`, "utf8");
   const styles = readFileSync(`${WEB}styles.css`, "utf8");
   return fill(template, {
     styles: cssVariables() + styles,
+    toc: renderToc(),
     content: site.map(renderPart).join("\n"),
+    script: readFileSync(`${WEB}app.js`, "utf8"),
   });
 }
 
