@@ -1196,6 +1196,150 @@ export const site: Part[] = [
           },
         ],
       },
+      {
+        id: "two-pointers",
+        title: "Two pointers",
+        entries: [
+          {
+            id: "pair-sum-sorted",
+            title: "Pair with a target sum (sorted)",
+            aliases: [
+              "two sum sorted",
+              "two sum ii",
+              "opposite ends",
+              "converging pointers",
+            ],
+            code: ["algorithms/two_pointers.ts:pairWithSum"],
+            time: "O(n)",
+            space: "O(1)",
+            useWhen:
+              "The input is sorted and you need a pair. For unsorted input use a Map of seen values instead.",
+          },
+          {
+            id: "three-sum",
+            title: "Three sum",
+            aliases: [
+              "3sum",
+              "triplets",
+              "sum to zero",
+              "skip duplicates",
+            ],
+            code: ["algorithms/two_pointers.ts:threeSum"],
+            time: "O(n^2)",
+            space: "O(n) for the sorted copy",
+            gotcha:
+              "Skip equal neighbours for the first value and after each match, or the output repeats triplets.",
+          },
+          {
+            id: "remove-duplicates",
+            title: "Remove duplicates in place",
+            aliases: [
+              "read write pointer",
+              "dedupe sorted array",
+              "in place",
+              "fast slow pointer",
+            ],
+            code: ["algorithms/two_pointers.ts:removeDuplicates"],
+            time: "O(n)",
+            space: "O(1)",
+          },
+          {
+            id: "valid-palindrome",
+            title: "Valid palindrome",
+            aliases: [
+              "palindrome check",
+              "ignore punctuation",
+              "reverse compare",
+            ],
+            code: ["algorithms/two_pointers.ts:isPalindrome"],
+            time: "O(n)",
+            space: "O(1)",
+          },
+        ],
+      },
+      {
+        id: "sliding-window",
+        title: "Sliding window",
+        entries: [
+          {
+            id: "fixed-window",
+            title: "Fixed-size window",
+            aliases: [
+              "window of size k",
+              "moving sum",
+              "max sum subarray of size k",
+              "rolling",
+            ],
+            code: ["algorithms/sliding_window.ts:maxWindowSum"],
+            time: "O(n)",
+            space: "O(1)",
+          },
+          {
+            id: "variable-window",
+            title: "Variable window: grow, then shrink while invalid",
+            aliases: [
+              "at most k distinct",
+              "longest substring",
+              "minimum window",
+              "shrink window",
+            ],
+            code: ["algorithms/sliding_window.ts:longestWithKDistinct"],
+            time: "O(n)",
+            space: "O(k)",
+            useWhen:
+              "Longest or shortest contiguous run that satisfies a condition, where shrinking can only fix a violation.",
+          },
+          {
+            id: "longest-unique-substring",
+            title: "Longest substring without repeats",
+            aliases: [
+              "no repeating characters",
+              "last seen index",
+              "unique window",
+            ],
+            code: [
+              "algorithms/sliding_window.ts:longestUniqueSubstring",
+            ],
+            time: "O(n)",
+            space: "O(k), k = alphabet size",
+          },
+        ],
+      },
+      {
+        id: "prefix-sums",
+        title: "Prefix sums",
+        entries: [
+          {
+            id: "prefix-sum-array",
+            title: "Prefix sums & range sums",
+            aliases: [
+              "cumulative sum",
+              "running total",
+              "range sum query",
+            ],
+            code: [
+              "algorithms/prefix_sums.ts:prefixSums",
+              "algorithms/prefix_sums.ts:demoRangeSum",
+            ],
+            time: "O(n) to build, O(1) per range",
+            space: "O(n)",
+          },
+          {
+            id: "subarray-sum-k",
+            title: "Count subarrays that sum to k",
+            aliases: [
+              "subarray sum equals k",
+              "prefix sum hash map",
+              "negative numbers window",
+            ],
+            code: ["algorithms/prefix_sums.ts:countSubarraysWithSum"],
+            time: "O(n)",
+            space: "O(n)",
+            useWhen:
+              "Subarray sums with negative numbers, where a sliding window does not work.",
+          },
+        ],
+      },
     ],
   },
 ];
