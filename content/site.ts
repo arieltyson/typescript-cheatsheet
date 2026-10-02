@@ -295,6 +295,99 @@ export const site: Part[] = [
           },
         ],
       },
+      {
+        id: "maps-sets",
+        title: "Map, Set & objects",
+        entries: [
+          {
+            id: "map",
+            title: "Map",
+            aliases: [
+              "hash map",
+              "dictionary",
+              "get default",
+              "has key",
+              "map iteration",
+              "insertion order",
+            ],
+            code: ["syntax/maps.ts:demoMap"],
+            gotcha:
+              "`map.get(key)` is `undefined` when missing. Use `?? 0` for a default, not `|| 0`, so a stored 0 survives.",
+          },
+          {
+            id: "counting",
+            title: "Count occurrences",
+            aliases: [
+              "frequency",
+              "counter",
+              "histogram",
+              "most common",
+              "top k frequent",
+              "sort map by value",
+            ],
+            code: ["syntax/maps.ts:demoCounting"],
+          },
+          {
+            id: "grouping",
+            title: "Group values by key",
+            aliases: [
+              "group by",
+              "group anagrams",
+              "multimap",
+              "bucket",
+              "Map.groupBy",
+            ],
+            code: ["syntax/maps.ts:demoGrouping"],
+            gotcha:
+              "`Map.groupBy(items, keyFn)` does this in one call, but needs ES2024 (Node 21+).",
+          },
+          {
+            id: "set",
+            title: "Set & set operations",
+            aliases: [
+              "unique",
+              "dedupe",
+              "union",
+              "intersection",
+              "difference",
+              "visited",
+              "contains",
+            ],
+            code: ["syntax/maps.ts:demoSet"],
+            gotcha:
+              "`first.union(second)` and `intersection` exist only in ES2025 (Node 22+). The spread and filter versions work everywhere.",
+          },
+          {
+            id: "objects",
+            title: "Objects as records",
+            aliases: [
+              "Record",
+              "Object.keys",
+              "Object.entries",
+              "fromEntries",
+              "in operator",
+              "plain object",
+            ],
+            code: ["syntax/maps.ts:demoObjects"],
+            useWhen:
+              "Fixed string keys known in advance. For keys added at run time, counts or non-string keys, use a `Map`.",
+          },
+          {
+            id: "coordinate-keys",
+            title: "Coordinates as keys",
+            aliases: [
+              "visited grid",
+              "tuple key",
+              "pair key",
+              "string key",
+              "2d visited",
+            ],
+            code: ["syntax/maps.ts:demoCoordinateKeys"],
+            gotcha:
+              "`new Set([[0, 1]]).has([0, 1])` is false. Encode the pair as a string or a number.",
+          },
+        ],
+      },
     ],
   },
 ];
