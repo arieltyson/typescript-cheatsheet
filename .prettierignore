@@ -1,0 +1,4 @@
+dist/
+package-lock.json
+web/fonts/
+*.md
