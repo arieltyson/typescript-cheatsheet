@@ -1,6 +1,6 @@
 // Checks against the built dist/index.html, not the source.
 import assert from "node:assert/strict";
-import { mkdtempSync, readFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { test } from "node:test";
 import { site } from "../content/site.ts";
@@ -103,4 +103,17 @@ test("CSP allows exactly the inline code", () => {
 test("icon tile is the mark blue", () => {
   const icon = readFileSync(`${WEB}favicon.svg`, "utf8");
   assert.ok(icon.includes(`fill="${MARK_BLUE}"`));
+});
+
+// Without og:title, Safari's Reading List titles a #fragment link after
+// that section instead of the page
+test("link previews name the site and ship their images", () => {
+  const title = page.match(/<title>(.*?)<\/title>/)?.[1];
+  assert.ok(
+    page.includes(`<meta property="og:title" content="${title}">`),
+  );
+  for (const asset of ["apple-touch-icon.png", "og-image.png"]) {
+    assert.ok(page.includes(asset), asset);
+    assert.ok(existsSync(`${output}${asset}`), asset);
+  }
 });
