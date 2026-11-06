@@ -41,10 +41,14 @@ export const site: Part[] = [
               "last element",
               "includes",
               "indexOf",
+              "reverse",
+              "reverse array",
+              "reverse list",
+              "toReversed",
             ],
             code: ["syntax/arrays.ts:demoArrayOperations"],
             gotcha:
-              "`shift()` and `unshift()` are O(n). Use a head index for queues.",
+              "`shift()` and `unshift()` are O(n). Use a head index for queues. `reverse()` changes the original array; use `toReversed()` for a copy.",
           },
           {
             id: "sort",

@@ -31,6 +31,11 @@ export function demoArrayOperations(): void {
   assert.deepEqual(items.splice(1, 1, 7, 8), [1]);
   assert.deepEqual(items, [2, 7, 8, 4]);
   assert.deepEqual([...items, 0], [2, 7, 8, 4, 0]);
+  // toReversed() returns a copy; reverse() changes the array
+  assert.deepEqual(items.toReversed(), [4, 8, 7, 2]);
+  assert.deepEqual(items, [2, 7, 8, 4]);
+  items.reverse();
+  assert.deepEqual(items, [4, 8, 7, 2]);
 }
 
 export function demoSorting(): void {
