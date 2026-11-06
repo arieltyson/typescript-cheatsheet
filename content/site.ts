@@ -18,6 +18,9 @@ export const site: Part[] = [
             aliases: [
               "array of zeros",
               "2d array",
+              "nested array",
+              "array of arrays",
+              "list of lists",
               "grid",
               "matrix",
               "range",
