@@ -495,6 +495,9 @@ export const site: Part[] = [
               "log2",
               "abs",
               "hypot",
+              "vector length",
+              "magnitude",
+              "3D vector",
               "infinity",
               "isInteger",
             ],
@@ -514,6 +517,42 @@ export const site: Part[] = [
             ],
             time: "O(log min(a, b))",
             space: "O(1)",
+          },
+        ],
+      },
+      {
+        id: "dates",
+        title: "Dates & time",
+        entries: [
+          {
+            id: "date-math",
+            title: "Date math in milliseconds",
+            aliases: [
+              "Date",
+              "getTime",
+              "Date.now",
+              "seconds ago",
+              "time cutoff",
+              "subtract time",
+              "timestamp",
+            ],
+            code: ["syntax/dates.ts:demoDateMath"],
+            gotcha:
+              "`Date` follows the wall clock, which can jump when the system time changes. Everything is in milliseconds, not seconds.",
+          },
+          {
+            id: "elapsed-time",
+            title: "Elapsed time with performance.now",
+            aliases: [
+              "performance.now",
+              "monotonic clock",
+              "measure time",
+              "stopwatch",
+              "duration",
+            ],
+            code: ["syntax/dates.ts:demoElapsedTime"],
+            useWhen:
+              "Measuring how long something took. `performance.now()` only moves forward; `Date.now()` can jump back.",
           },
         ],
       },
@@ -803,6 +842,25 @@ export const site: Part[] = [
               "A long-running queue where memory must be released as items leave.",
           },
           {
+            id: "ring-buffer",
+            title: "Ring buffer",
+            aliases: [
+              "circular buffer",
+              "circular queue",
+              "fixed capacity",
+              "last N items",
+              "overwrite oldest",
+            ],
+            code: [
+              "structures/stack_queue.ts:RingBuffer",
+              "structures/stack_queue.ts:demoRingBuffer",
+            ],
+            time: "O(1) per add",
+            space: "O(capacity)",
+            useWhen:
+              "You want the last N items, by count rather than by time. Memory never grows.",
+          },
+          {
             id: "valid-brackets",
             title: "Balanced brackets",
             aliases: [
@@ -815,6 +873,59 @@ export const site: Part[] = [
             space: "O(n)",
             useWhen:
               "Matching pairs, nesting, or undoing the most recent thing first.",
+          },
+        ],
+      },
+      {
+        id: "rolling-windows",
+        title: "Rolling time windows",
+        entries: [
+          {
+            id: "rolling-window",
+            title: "Rolling time window",
+            aliases: [
+              "rolling window",
+              "time window",
+              "last N seconds",
+              "expire old",
+              "evict old",
+              "purge old data",
+              "thread safe",
+              "race condition",
+              "timestamps",
+              "threshold check",
+            ],
+            code: [
+              "structures/rolling_window.ts:TimedValue",
+              "structures/rolling_window.ts:RollingWindow",
+              "structures/rolling_window.ts:demoRollingWindow",
+            ],
+            time: "O(1) amortized per add, O(n) per check",
+            space: "O(n), n = values in the window",
+            useWhen:
+              "Values arrive with timestamps and you only care about the most recent stretch of time.",
+            gotcha:
+              "JavaScript runs one task at a time, so no lock is needed: code between two `await`s cannot be interrupted. Keep `add` synchronous, and remember eviction relies on values arriving in time order.",
+          },
+          {
+            id: "rolling-max",
+            title: "Largest value in a rolling time window",
+            aliases: [
+              "rolling max",
+              "peak in window",
+              "max in last N seconds",
+              "O(1) max",
+              "monotonic deque",
+              "time window maximum",
+            ],
+            code: [
+              "structures/rolling_window.ts:RollingMax",
+              "structures/rolling_window.ts:demoRollingMax",
+            ],
+            time: "O(1) amortized per add, O(1) per peak",
+            space: "O(n) worst case, usually far less",
+            useWhen:
+              'You only need the largest value, so values that can never win are not worth keeping. Compare `peak` with a threshold to answer "was it ever this high?".',
           },
         ],
       },
@@ -1309,6 +1420,24 @@ export const site: Part[] = [
             ],
             time: "O(n)",
             space: "O(k), k = alphabet size",
+          },
+          {
+            id: "sliding-window-max",
+            title: "Sliding window maximum",
+            aliases: [
+              "monotonic deque",
+              "monotonic queue",
+              "max of each window",
+              "window maximum",
+              "max in window",
+            ],
+            code: ["algorithms/sliding_window.ts:slidingWindowMax"],
+            time: "O(n)",
+            space: "O(n)",
+            useWhen:
+              "The largest (or, with `>=`, smallest) value in every window. For a window measured in time, see Rolling time windows.",
+            gotcha:
+              "Store indices, not values: the index tells you when the front has left the window.",
           },
         ],
       },

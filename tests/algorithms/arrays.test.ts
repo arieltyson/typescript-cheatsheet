@@ -8,6 +8,7 @@ import {
   longestUniqueSubstring,
   longestWithKDistinct,
   maxWindowSum,
+  slidingWindowMax,
 } from "../../snippets/algorithms/sliding_window.ts";
 import {
   isPalindrome,
@@ -126,5 +127,27 @@ test("prefix sums and subarray counts", () => {
       }
       assert.equal(countSubarraysWithSum(values, target), expected);
     }
+  }
+});
+
+test("sliding window maximum", () => {
+  assert.deepEqual(
+    slidingWindowMax([1, 3, -1, -3, 5, 3, 6, 7], 3),
+    [3, 3, 5, 5, 6, 7],
+  );
+  assert.deepEqual(slidingWindowMax([], 3), []);
+  assert.deepEqual(slidingWindowMax([1, 2], 3), []);
+  assert.deepEqual(slidingWindowMax([1, 2], 0), []);
+});
+
+test("sliding window maximum matches brute force", () => {
+  for (let round = 0; round < 500; round++) {
+    const count = 1 + Math.floor(random() * 30);
+    const values = randomInts(random, count, -5, 5);
+    const k = 1 + Math.floor(random() * count);
+    const expected = Array.from({ length: count - k + 1 }, (_, start) =>
+      Math.max(...values.slice(start, start + k)),
+    );
+    assert.deepEqual(slidingWindowMax(values, k), expected);
   }
 });

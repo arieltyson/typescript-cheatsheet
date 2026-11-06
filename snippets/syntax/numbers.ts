@@ -31,6 +31,8 @@ export function demoMath(): void {
   assert.equal(Math.floor(Math.sqrt(17)), 4);
   assert.equal(Math.log2(8), 3);
   assert.equal(Math.hypot(3, 4), 5);
+  // Any number of dimensions: the length of a 3D vector
+  assert.equal(Math.hypot(3, 4, 0), 5);
   assert.equal(Math.sign(-3), -1);
   assert.ok(Infinity > Number.MAX_SAFE_INTEGER);
   assert.equal(Math.min(Infinity, 5), 5);

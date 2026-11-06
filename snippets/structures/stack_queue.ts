@@ -78,3 +78,43 @@ export function isBalanced(text: string): boolean {
   }
   return stack.length === 0;
 }
+
+/** Holds the last `capacity` items; a new item replaces the oldest. */
+export class RingBuffer<T> {
+  #slots: T[] = [];
+  #head = 0;
+  #capacity: number;
+
+  constructor(capacity: number) {
+    if (capacity <= 0) throw new RangeError("capacity must be > 0");
+    this.#capacity = capacity;
+  }
+
+  get size(): number {
+    return this.#slots.length;
+  }
+
+  add(item: T): void {
+    if (this.#slots.length < this.#capacity) {
+      this.#slots.push(item);
+    } else {
+      this.#slots[this.#head] = item;
+      this.#head = (this.#head + 1) % this.#capacity;
+    }
+  }
+
+  /** Oldest first. */
+  items(): T[] {
+    return [
+      ...this.#slots.slice(this.#head),
+      ...this.#slots.slice(0, this.#head),
+    ];
+  }
+}
+
+export function demoRingBuffer(): void {
+  const ring = new RingBuffer<number>(3);
+  for (let value = 1; value <= 5; value++) ring.add(value);
+  assert.deepEqual(ring.items(), [3, 4, 5]);
+  assert.equal(ring.size, 3);
+}

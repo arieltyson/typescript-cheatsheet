@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import {
   Queue,
+  RingBuffer,
   isBalanced,
 } from "../../snippets/structures/stack_queue.ts";
 
@@ -36,4 +37,22 @@ test("balanced brackets", () => {
   for (const text of ["(", ")", "(]", "([)]", "(()", "}{"]) {
     assert.ok(!isBalanced(text), text);
   }
+});
+
+test("ring buffer matches an array model", () => {
+  for (let capacity = 1; capacity <= 6; capacity++) {
+    const ring = new RingBuffer<number>(capacity);
+    const model: number[] = [];
+    for (let step = 0; step < 40; step++) {
+      ring.add(step);
+      model.push(step);
+      if (model.length > capacity) model.shift();
+      assert.deepEqual(ring.items(), model);
+      assert.equal(ring.size, model.length);
+    }
+  }
+});
+
+test("ring buffer rejects a capacity of zero", () => {
+  assert.throws(() => new RingBuffer<number>(0), RangeError);
 });

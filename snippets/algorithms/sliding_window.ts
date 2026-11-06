@@ -41,3 +41,28 @@ export function longestUniqueSubstring(text: string): number {
   }
   return best;
 }
+
+/** Return the largest value in each window of size k. */
+export function slidingWindowMax(
+  values: number[],
+  k: number,
+): number[] {
+  if (k <= 0) return [];
+  // Indices whose values strictly decrease from head to end
+  const deque: number[] = [];
+  let head = 0;
+  const result: number[] = [];
+  for (let index = 0; index < values.length; index++) {
+    // A smaller, older value can never be the largest again
+    while (
+      deque.length > head &&
+      values[deque[deque.length - 1]] <= values[index]
+    ) {
+      deque.pop();
+    }
+    deque.push(index);
+    if (deque[head] <= index - k) head++;
+    if (index >= k - 1) result.push(values[deque[head]]);
+  }
+  return result;
+}
